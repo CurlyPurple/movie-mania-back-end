@@ -68,10 +68,29 @@ async function deleteMovieConcept(req,res) {
   }
 }
 
+async function createComment(req, res) {
+  try {
+    req.body.author = req.user.profile
+    const concept = await MovieConcept.findById(req.params.movieConceptId)
+    concept.comments.push(req.body)
+    await concept.save()
+
+    const newComment = concept.comments.at(-1)
+
+    const profile = await Profile.findById(req.user.profile)
+    newComment.author = profile
+
+    res.status(201).json(newComment)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
 export {
   create,
   show,
   update,
   index,
   deleteMovieConcept as delete,
+  createComment,
 }

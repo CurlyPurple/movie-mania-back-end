@@ -14,5 +14,6 @@ router.post('/', checkAuth, movieConceptsCtrl.create)
 router.get('/:movieConceptId', checkAuth, movieConceptsCtrl.show)
 router.put('/:movieConceptId', checkAuth, movieConceptsCtrl.update)
 router.delete('/:movieConceptId', checkAuth, movieConceptsCtrl.delete)
+router.post('/:movieConceptId/comments', checkAuth, movieConceptsCtrl.createComment)
 
 export { router }
