@@ -18,6 +18,18 @@ async function create(req,res) {
   }
 }
 
+async function show(req, res) {
+  try {
+    const concept = await MovieConcept.findById(req.params.movieConceptId)
+      .populate(['author', 'comments.author'])
+    res.status(200).json(concept)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
 export {
   create,
+  show,
 }

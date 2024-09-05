@@ -10,5 +10,6 @@ const router = Router()
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
 router.post('/', checkAuth, movieConceptsCtrl.create)
+router.get('/:movieConceptId', checkAuth, movieConceptsCtrl.show)
 
 export { router }
