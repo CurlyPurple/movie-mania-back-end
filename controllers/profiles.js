@@ -46,8 +46,24 @@ async function addActor(req, res) {
   }
 }
 
+async function addGenre(req, res) {
+  try {
+    const profile = await Profile.findById(req.user.profile)
+    if (profile.favGenres.some(genre => req.body.genreId === genre.genreId)) {
+      throw new Error('Genre already exists in the Profile')
+    }
+    profile.favGenres.push(req.body)
+    await profile.save()
+    res.status(201).json(profile.favGenres)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
 export { 
   index, 
   addPhoto,
   addActor, 
+  addGenre,
 }
