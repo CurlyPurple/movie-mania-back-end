@@ -8,5 +8,6 @@ const router = Router()
 router.use(decodeUserFromToken)
 router.get('/movie', checkAuth, tmdbCtrl.movieSearch)
 router.get('/celeb', checkAuth, tmdbCtrl.celebSearch)
+router.get('/recommendations', checkAuth, tmdbCtrl.recommendations)
 
 export { router }
