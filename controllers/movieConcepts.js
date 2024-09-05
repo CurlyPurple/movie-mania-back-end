@@ -43,8 +43,21 @@ async function update(req, res) {
   }
 }
 
+async function index(req, res) {
+  try {
+    const concepts = await MovieConcept.find({})
+      .populate('author')
+      .sort({ createdAt: 'desc' })
+    res.status(200).json(concepts)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
 export {
   create,
   show,
   update,
+  index,
 }
