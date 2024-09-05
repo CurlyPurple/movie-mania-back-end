@@ -37,6 +37,28 @@ async function movieSearch(req, res) {
   }
 }
 
+async function celebSearch(req, res) {
+  try {
+    const response = await fetch(`${BASE_URL}/search/person?query=${req.body.name}&api_key=${API_KEY}`)
+    const celebs = await response.json()
+
+    // massage data for celebs to pass appropriate json-data to front-end
+    const celebResults = celebs.results.map(celeb => ({
+      celebId: celeb.id,
+      skill: celeb.known_for_department,
+      name: celeb.name,
+      imageUrl: `https://image.tmdb.org/t/p/w185${celeb.profile_path}`,
+      knownFor: celeb.known_for.filter(work => work.media_type === 'movie')
+        .map(movie => movie.title),
+    }))
+    res.status(200).json(celebResults)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
 export {
   movieSearch,
+  celebSearch,
 }
