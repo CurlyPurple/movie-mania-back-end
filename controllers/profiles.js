@@ -61,9 +61,26 @@ async function addGenre(req, res) {
   }
 }
 
+async function addDirector(req, res) {
+  try {
+    const profile = await Profile.findById(req.user.profile)
+    if (profile.favDirectors.some(director => req.body.celebId === director.celebId)) {
+      throw new Error('Director already exists in the Profile')
+    }
+    req.body.skill = 'Directing'
+    profile.favDirectors.push(req.body)
+    await profile.save()
+    res.status(201).json(profile.favDirectors)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
 export { 
   index, 
   addPhoto,
   addActor, 
   addGenre,
+  addDirector,
 }
