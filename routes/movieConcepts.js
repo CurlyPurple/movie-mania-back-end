@@ -11,5 +11,6 @@ const router = Router()
 router.use(decodeUserFromToken)
 router.post('/', checkAuth, movieConceptsCtrl.create)
 router.get('/:movieConceptId', checkAuth, movieConceptsCtrl.show)
+router.put('/:movieConceptId', checkAuth, movieConceptsCtrl.update)
 
 export { router }
