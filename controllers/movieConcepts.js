@@ -99,6 +99,18 @@ async function updateComment(req, res) {
   }
 }
 
+async function deleteComment(req, res) {
+  try {
+    const concept = await MovieConcept.findById(req.params.movieConceptId)
+    concept.comments.remove({ _id: req.params.commentId })
+    await concept.save()
+    res.status(201).json(concept)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
 export {
   create,
   show,
@@ -107,4 +119,5 @@ export {
   deleteMovieConcept as delete,
   createComment,
   updateComment,
+  deleteComment,
 }
