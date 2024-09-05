@@ -30,4 +30,24 @@ async function addPhoto(req, res) {
   }
 }
 
-export { index, addPhoto }
+async function addActor(req, res) {
+  try {
+    const profile = await Profile.findById(req.user.profile)
+    if (profile.favActors.some(actor => req.body.celebId === actor.celebId)) {
+      throw new Error('Actor already exists in the Profile')
+    }
+    req.body.skill = 'Acting'
+    profile.favActors.push(req.body)
+    await profile.save()
+    res.status(201).json(profile.favActors)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
+export { 
+  index, 
+  addPhoto,
+  addActor, 
+}
