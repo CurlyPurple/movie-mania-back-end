@@ -55,9 +55,23 @@ async function index(req, res) {
   }
 }
 
+async function deleteMovieConcept(req,res) {
+  try {
+    const concept = await MovieConcept.findByIdAndDelete(req.params.movieConceptId)
+    const profile = await Profile.findById(req.user.profile)
+    profile.movieConcepts.remove({ _id: req.params.movieConceptId })
+    await profile.save()
+    res.status(200).json(concept)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
 export {
   create,
   show,
   update,
   index,
+  deleteMovieConcept as delete,
 }
