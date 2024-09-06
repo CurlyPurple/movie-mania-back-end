@@ -77,10 +77,26 @@ async function addDirector(req, res) {
   }
 }
 
+async function addMovie(req, res) {
+  try {
+    const profile = await Profile.findById(req.user.profile)
+    if (profile.favMovies.some(movie => req.body.movieId === movie.movieId)) {
+      throw new Error('Movie already exists in the favorites in the Profile')
+    }
+    profile.favMovies.push(req.body)
+    await profile.save()
+    res.status(201).json(profile.favMovies)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
 export { 
   index, 
   addPhoto,
   addActor, 
   addGenre,
   addDirector,
+  addMovie,
 }

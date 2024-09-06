@@ -14,5 +14,7 @@ router.put('/:id/add-photo', checkAuth, profilesCtrl.addPhoto)
 router.post('/add-actor', checkAuth, profilesCtrl.addActor)
 router.post('/add-genre', checkAuth, profilesCtrl.addGenre)
 router.post('/add-director', checkAuth, profilesCtrl.addDirector)
+router.post('/add-movie', checkAuth, profilesCtrl.addMovie)
+
 
 export { router }
