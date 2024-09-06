@@ -15,6 +15,7 @@ router.post('/add-actor', checkAuth, profilesCtrl.addActor)
 router.post('/add-genre', checkAuth, profilesCtrl.addGenre)
 router.post('/add-director', checkAuth, profilesCtrl.addDirector)
 router.post('/add-movie', checkAuth, profilesCtrl.addMovie)
+router.post('/add-to-watch-list', checkAuth, profilesCtrl.addToWatchList)
 
 
 export { router }

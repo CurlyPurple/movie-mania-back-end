@@ -92,6 +92,21 @@ async function addMovie(req, res) {
   }
 }
 
+async function addToWatchList(req, res) {
+  try {
+    const profile = await Profile.findById(req.user.profile)
+    if (profile.watchList.some(movie => req.body.movieId === movie.movieId)) {
+      throw new Error('Movie already exists in the watch-list in the Profile')
+    }
+    profile.watchList.push(req.body)
+    await profile.save()
+    res.status(201).json(profile.watchList)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
 export { 
   index, 
   addPhoto,
@@ -99,4 +114,5 @@ export {
   addGenre,
   addDirector,
   addMovie,
+  addToWatchList,
 }
