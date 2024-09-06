@@ -40,7 +40,7 @@ async function movieSearch(req, res) {
 
 async function celebSearch(req, res) {
   try {
-    const response = await fetch(`${BASE_URL}/search/person?query=${req.body.name}&api_key=${API_KEY}`)
+    const response = await fetch(`${BASE_URL}/search/person?query=${req.params.name}&api_key=${API_KEY}`)
     const celebs = await response.json()
 
     // massage data for celebs to pass appropriate json-data to front-end
