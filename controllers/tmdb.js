@@ -6,17 +6,20 @@ const API_KEY = `${process.env.TMDB_API_KEY}`
 
 async function movieSearch(req, res) {
   try {
-    const response = await fetch(`${BASE_URL}/search/movie?query=${req.body.title}&api_key=${API_KEY}`)
+    console.log(req.params.query)
+    const response = await fetch(`${BASE_URL}/search/movie?query=${req.params.query}&api_key=${API_KEY}`)
     const movies = await response.json()
 
     // filter movies based on predefined movie genres in the genreObjects array 
     // && filter out movies without poster_path
     const filteredMovies = movies.results.filter(movie =>
-      movie.genre_ids.every(genreId => 
-        genreObjects.some(genre => genreId === genre.id)
-      ) 
+      movie.genre_ids.length
+      &&
+      movie.genre_ids.every(genreId => genreObjects.some(genre => genreId === genre.id)) 
       && 
       movie.poster_path
+      &&
+      movie.release_date
     )
 
     // massage the movies object data to pass appropriate json-data to front-end
@@ -40,7 +43,7 @@ async function movieSearch(req, res) {
 
 async function celebSearch(req, res) {
   try {
-    const response = await fetch(`${BASE_URL}/search/person?query=${req.params.name}&api_key=${API_KEY}`)
+    const response = await fetch(`${BASE_URL}/search/person?query=${req.params.query}&api_key=${API_KEY}`)
     const celebs = await response.json()
 
     // massage data for celebs to pass appropriate json-data to front-end
@@ -80,6 +83,8 @@ async function recommendations(req, res) {
     }
     // filter based on the pre-defined movie-genres and user's favGenres
     const filteredMovies = movies.filter(movie =>
+      movie.genre_ids.length
+      &&
       movie.genre_ids.every(genreId => genreObjects.some(genre => genreId === genre.id))  
       &&
       profile.favGenres.some(genre => movie.genre_ids.includes(genre.genreId))
