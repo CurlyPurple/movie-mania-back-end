@@ -45,9 +45,18 @@ async function celebSearch(req, res) {
   try {
     const response = await fetch(`${BASE_URL}/search/person?query=${req.params.query}&api_key=${API_KEY}`)
     const celebs = await response.json()
+    
+    //filtered celebs
+    const filteredCelebs = celebs.results.filter(celeb => (
+      celeb.profile_path
+      &&
+      celeb.popularity > 1
+      &&
+      celeb.known_for.length
+    ))
 
     // massage data for celebs to pass appropriate json-data to front-end
-    const celebResults = celebs.results.map(celeb => ({
+    const celebResults = filteredCelebs.map(celeb => ({
       celebId: celeb.id,
       skill: celeb.known_for_department,
       name: celeb.name,
