@@ -20,7 +20,7 @@ async function create(req, res) {
 
 async function show(req, res) {
   try {
-    const concept = await MovieConcept.findById(req.params.movieConceptId)
+    const concept = await MovieConcept.findById(req.params.movieConId)
       .populate(['author', 'comments.author'])
     res.status(200).json(concept)
   } catch (error) {
@@ -32,7 +32,7 @@ async function show(req, res) {
 async function update(req, res) {
   try {
     const concept = await MovieConcept.findByIdAndUpdate(
-      req.params.movieConceptId,
+      req.params.movieConId,
       req.body,
       { new: true }
     ).populate('author')
@@ -57,9 +57,9 @@ async function index(req, res) {
 
 async function deleteMovieConcept(req,res) {
   try {
-    const concept = await MovieConcept.findByIdAndDelete(req.params.movieConceptId)
+    const concept = await MovieConcept.findByIdAndDelete(req.params.movieConId)
     const profile = await Profile.findById(req.user.profile)
-    profile.movieConcepts.remove({ _id: req.params.movieConceptId })
+    profile.movieConcepts.remove({ _id: req.params.movieConId })
     await profile.save()
     res.status(200).json(concept)
   } catch (error) {
@@ -71,7 +71,7 @@ async function deleteMovieConcept(req,res) {
 async function createComment(req, res) {
   try {
     req.body.author = req.user.profile
-    const concept = await MovieConcept.findById(req.params.movieConceptId)
+    const concept = await MovieConcept.findById(req.params.movieConId)
     concept.comments.push(req.body)
     await concept.save()
 
@@ -88,7 +88,7 @@ async function createComment(req, res) {
 
 async function updateComment(req, res) {
   try {
-    const concept = await MovieConcept.findById(req.params.movieConceptId)
+    const concept = await MovieConcept.findById(req.params.movieConId)
     const comment = concept.comments.id(req.body._id)
     comment.content = req.body.content
     await concept.save()
@@ -101,7 +101,7 @@ async function updateComment(req, res) {
 
 async function deleteComment(req, res) {
   try {
-    const concept = await MovieConcept.findById(req.params.movieConceptId)
+    const concept = await MovieConcept.findById(req.params.movieConId)
     concept.comments.remove({ _id: req.params.commentId })
     await concept.save()
     res.status(201).json(concept)
