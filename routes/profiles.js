@@ -14,12 +14,11 @@ router.get('/', checkAuth, profilesCtrl.index)
 router.get('/:id', checkAuth, profilesCtrl.show)
 
 router.put('/:id/add-photo', checkAuth, profilesCtrl.addPhoto)
-
-router.post('/add-actor', checkAuth, profilesCtrl.addActor)
-router.post('/add-genre', checkAuth, profilesCtrl.addGenre)
-router.post('/add-director', checkAuth, profilesCtrl.addDirector)
-router.post('/add-movie', checkAuth, profilesCtrl.addMovie)
-router.post('/add-to-watch-list', checkAuth, profilesCtrl.addToWatchList)
+router.put('/add-actor', checkAuth, profilesCtrl.addActor)
+router.put('/add-genre', checkAuth, profilesCtrl.addGenre)
+router.put('/add-director', checkAuth, profilesCtrl.addDirector)
+router.put('/add-movie', checkAuth, profilesCtrl.addMovie)
+router.put('/add-to-watch-list', checkAuth, profilesCtrl.addToWatchList)
 
 
 export { router }
