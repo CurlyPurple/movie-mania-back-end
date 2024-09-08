@@ -1,21 +1,23 @@
 import { Router } from 'express'
 import { decodeUserFromToken, checkAuth } from '../middleware/auth.js'
-import * as movieConceptsCtrl from '../controllers/movieConcepts.js'
+import * as movieConsCtrl from '../controllers/movieConcepts.js'
 
 const router = Router()
 
 /*---------- Public Routes ----------*/
-
+router.get('/', movieConsCtrl.index)
+router.get('/:movieConId', movieConsCtrl.show)
 
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
-router.get('/', checkAuth, movieConceptsCtrl.index)
-router.post('/', checkAuth, movieConceptsCtrl.create)
-router.get('/:movieConceptId', checkAuth, movieConceptsCtrl.show)
-router.put('/:movieConceptId', checkAuth, movieConceptsCtrl.update)
-router.delete('/:movieConceptId', checkAuth, movieConceptsCtrl.delete)
-router.post('/:movieConceptId/comments', checkAuth, movieConceptsCtrl.createComment)
-router.put('/:movieConceptId/comments', checkAuth, movieConceptsCtrl.updateComment)
-router.delete('/:movieConceptId/comments/:commentId', checkAuth, movieConceptsCtrl.deleteComment)
+
+router.post('/', checkAuth, movieConsCtrl.create)
+router.post('/:movieConId/comments', checkAuth, movieConsCtrl.createComment)
+
+router.put('/:movieConId', checkAuth, movieConsCtrl.update)
+router.put('/:movieConId/comments', checkAuth, movieConsCtrl.updateComment)
+
+router.delete('/:movieConId', checkAuth, movieConsCtrl.delete)
+router.delete('/:movieConId/comments/:commentId', checkAuth, movieConsCtrl.deleteComment)
 
 export { router }
