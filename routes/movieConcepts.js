@@ -5,13 +5,14 @@ import * as movieConceptsCtrl from '../controllers/movieConcepts.js'
 const router = Router()
 
 /*---------- Public Routes ----------*/
-
+router.get('/', movieConceptsCtrl.index)
+router.get('/:movieConceptId', movieConceptsCtrl.show)
 
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
-router.get('/', checkAuth, movieConceptsCtrl.index)
+
 router.post('/', checkAuth, movieConceptsCtrl.create)
-router.get('/:movieConceptId', checkAuth, movieConceptsCtrl.show)
+
 router.put('/:movieConceptId', checkAuth, movieConceptsCtrl.update)
 router.delete('/:movieConceptId', checkAuth, movieConceptsCtrl.delete)
 router.post('/:movieConceptId/comments', checkAuth, movieConceptsCtrl.createComment)
