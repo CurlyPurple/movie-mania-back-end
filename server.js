@@ -11,7 +11,7 @@ import './config/database.js'
 // import routes
 import { router as profilesRouter } from './routes/profiles.js'
 import { router as authRouter } from './routes/auth.js'
-import { router as movieConceptsRouter } from './routes/movieConcepts.js'
+import { router as movieConsRouter } from './routes/movieConcepts.js'
 import { router as tmdbRouter } from './routes/tmdb.js'
 
 // create the express app
@@ -26,7 +26,7 @@ app.use(formData.parse())
 // mount imported routes
 app.use('/api/profiles', profilesRouter)
 app.use('/api/auth', authRouter)
-app.use('/api/movie-concepts', movieConceptsRouter)
+app.use('/api/movieCons', movieConsRouter)
 app.use('/api/tmdb', tmdbRouter)
 
 // handle 404 errors

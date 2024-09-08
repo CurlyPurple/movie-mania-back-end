@@ -6,6 +6,7 @@ const router = Router()
 
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
+
 router.get('/movie/:query', checkAuth, tmdbCtrl.movieSearch)
 router.get('/celeb/:query', checkAuth, tmdbCtrl.celebSearch)
 router.get('/recommendations', checkAuth, tmdbCtrl.recommendations)
