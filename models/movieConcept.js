@@ -1,7 +1,5 @@
 import mongoose from 'mongoose'
 
-import { celebSchema } from './profile.js'
-
 const Schema = mongoose.Schema
 
 const commentSchema = new Schema({
@@ -28,8 +26,8 @@ const movieConceptSchema = new Schema({
     type: [String],
     required: true
   },
-  actors: [celebSchema],
-  director: celebSchema,
+  actors: [String],
+  director: String,
   comments: [commentSchema],
 },{
   timestamps: true,
