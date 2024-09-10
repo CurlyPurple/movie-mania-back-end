@@ -154,6 +154,18 @@ async function removeMovie(req, res) {
   }
 }
 
+async function removeFromWatchList(req, res) {
+  try {
+    const profile = await Profile.findById(req.user.profile)
+    profile.watchList.remove({ _id: req.params.movieId }) 
+    await profile.save()
+    res.status(201).json(profile.watchList)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
 export { 
   index, 
   addPhoto,
@@ -165,5 +177,6 @@ export {
   show,
   removeActor,
   removeDirector,
-  removeMovie
+  removeMovie,
+  removeFromWatchList
 }
