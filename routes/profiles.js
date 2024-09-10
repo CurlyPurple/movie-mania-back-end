@@ -21,6 +21,7 @@ router.put('/add-movie', checkAuth, profilesCtrl.addMovie)
 router.put('/add-to-watch-list', checkAuth, profilesCtrl.addToWatchList)
 
 router.delete('/favActors/:actorId', checkAuth, profilesCtrl.removeActor)
+router.delete('/favDirectors/:directorId', checkAuth, profilesCtrl.removeDirector)
 
 
 
