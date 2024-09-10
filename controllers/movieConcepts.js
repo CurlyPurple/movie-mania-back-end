@@ -91,6 +91,7 @@ async function updateComment(req, res) {
     const concept = await MovieConcept.findById(req.params.movieConId)
     const comment = concept.comments.id(req.body._id)
     comment.content = req.body.content
+    comment.rating = req.body.rating
     await concept.save()
     res.status(200).json(concept)
   } catch (error) {
