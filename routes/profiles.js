@@ -24,7 +24,6 @@ router.delete('/favActors/:actorId', checkAuth, profilesCtrl.removeActor)
 router.delete('/favDirectors/:directorId', checkAuth, profilesCtrl.removeDirector)
 router.delete('/favMovies/:movieId', checkAuth, profilesCtrl.removeMovie)
 router.delete('/watchList/:movieId', checkAuth, profilesCtrl.removeFromWatchList)
-
-
+router.delete('/favGenres/:genreId', checkAuth, profilesCtrl.removeGenre)
 
 export { router }

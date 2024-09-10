@@ -166,6 +166,18 @@ async function removeFromWatchList(req, res) {
   }
 }
 
+async function removeGenre(req, res) {
+  try {
+    const profile = await Profile.findById(req.user.profile)
+    profile.favGenres.remove({ _id: req.params.genreId }) 
+    await profile.save()
+    res.status(201).json(profile.favGenres)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
 export { 
   index, 
   addPhoto,
@@ -178,5 +190,6 @@ export {
   removeActor,
   removeDirector,
   removeMovie,
-  removeFromWatchList
+  removeFromWatchList,
+  removeGenre,
 }
