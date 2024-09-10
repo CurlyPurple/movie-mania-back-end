@@ -94,7 +94,7 @@ async function createComment(req, res) {
       
       You have received following comment from ${profile.name}!
 
-      MovieCon: ${concept.title} (Avg Rating: ${averageRating(concept)})
+      MovieCon: ${concept.title} (Avg Rating: ${averageRating(concept).toFixed(1)})
       Rating: ${newComment.rating}
       Comment: ${newComment.content}
       
