@@ -124,9 +124,9 @@ async function populateVideoKey(movies) {
     const teaserExists = videos.some(video => video.type === 'Teaser') 
     const trailerExists = videos.some(video => video.type === 'Trailer')
     if (trailerExists) {
-      movie.teaserTrailerKey = videos.find(video => video.type === 'Teaser').key
-    } else if (teaserExists) {
       movie.teaserTrailerKey = videos.find(video => video.type === 'Trailer').key
+    } else if (teaserExists) {
+      movie.teaserTrailerKey = videos.find(video => video.type === 'Teaser').key
     } else { 
       movie.teaserTrailerKey = ''
     }     
