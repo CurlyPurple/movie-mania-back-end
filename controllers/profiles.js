@@ -21,7 +21,6 @@ async function show(req, res) {
   }
 }
 
-
 async function addPhoto(req, res) {
   try {
     const imageFile = req.files.photo.path

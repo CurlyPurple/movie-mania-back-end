@@ -27,6 +27,8 @@ const movieSchema = new Schema({
   rating: String,
   imageUrl: String,
   releaseDate: String,
+  videoKey: String,
+  credits: { cast: [String], crew: String }
 },{
   timestamps: true,
 })
