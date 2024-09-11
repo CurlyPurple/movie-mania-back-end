@@ -14,6 +14,7 @@ async function index(req, res) {
 async function show(req, res) {
   try {
     const profile = await Profile.findById(req.params.id)
+    .populate('movieConcepts')
     res.json(profile)
   } catch (err) {
     console.log(err)
