@@ -22,18 +22,13 @@ async function movieSearch(req, res) {
       movie.release_date
     )
 
+    // add values for properties movie.videoKey and movie.credits
+    const updatedMovies = await populateVideoKey(filteredMovies)
+    const populatedMovies = await populateCredits(updatedMovies)
+    
     // massage the movies object data to pass appropriate json-data to front-end
-    const movieResults = filteredMovies.map(movie => {
-      return {
-        movieId: movie.id,
-        title: movie.title,
-        genreIds: movie.genre_ids,
-        plot: movie.overview,
-        rating: movie.vote_average/2,
-        imageUrl: `https://image.tmdb.org/t/p/w185${movie.poster_path}`,
-        releaseDate: movie.release_date,
-      }
-    })
+    const movieResults = mapMoviesData(populatedMovies)
+
     res.status(200).json(movieResults)
   } catch (error) {
     console.log(error)
@@ -102,18 +97,14 @@ async function recommendations(req, res) {
       &&
       movie.release_date
     )
-    // massage the movie objects to pass appropriate json-data for front-end rendering
-    const recommendations = filteredMovies.map(movie => {
-      return {
-        movieId: movie.id,
-        title: movie.title,
-        genreIds: movie.genre_ids,
-        plot: movie.overview,
-        rating: movie.vote_average/2,
-        imageUrl: `https://image.tmdb.org/t/p/w185${movie.poster_path}`,
-        releaseDate: movie.release_date,
-      }
-    })
+
+    // add values for properties movie.videoKey and movie.credits
+    const updatedMovies = await populateVideoKey(filteredMovies)
+    const populatedMovies = await populateCredits(updatedMovies)
+    
+    // massage the movies object data to pass appropriate json-data to front-end
+    const recommendations = mapMoviesData(populatedMovies)
+
     // shuffle the array of movies before sending the json data to front-end
     recommendations.sort(()=> Math.random() - 0.5)
     res.status(200).json(recommendations)
@@ -121,6 +112,54 @@ async function recommendations(req, res) {
     console.log(error)
     res.status(500).json(error)
   }
+}
+
+/* === Helper Functions === */
+
+async function populateVideoKey(movies) {
+  for (const movie of movies) {
+    const vidResponse = await fetch(`${BASE_URL}/movie/${movie.id}/videos?api_key=${API_KEY}`)
+    const videoResults = await vidResponse.json()
+    const videos = videoResults.results
+    const teaserExists = videos.some(video => video.type === 'Teaser') 
+    const trailerExists = videos.some(video => video.type === 'Trailer')
+    if (teaserExists) {
+      movie.teaserTrailerKey = videos.find(video => video.type === 'Teaser').key
+    } else if (trailerExists) {
+      movie.teaserTrailerKey = videos.find(video => video.type === 'Trailer').key
+    } else { 
+      movie.teaserTrailerKey = ''
+    }     
+  }
+  return movies
+}
+
+async function populateCredits(movies) {
+  for (const movie of movies) {
+    const credResponse = await fetch(`${BASE_URL}/movie/${movie.id}/credits?api_key=${API_KEY}`)
+    const credResults = await credResponse.json()
+    const cast = credResults.cast.filter(actor => actor.order < 3)
+    const director = credResults.crew.find(artist => artist.job === 'Director')
+    movie.credits = { 
+      cast: cast.map(actor => actor.name), 
+      director: director.name 
+    }
+  }
+  return movies 
+}
+
+function mapMoviesData(movies) {
+  return movies.map(movie => ({
+      movieId: movie.id,
+      title: movie.title,
+      genreIds: movie.genre_ids,
+      plot: movie.overview,
+      rating: movie.vote_average/2,
+      imageUrl: `https://image.tmdb.org/t/p/w185${movie.poster_path}`,
+      releaseDate: movie.release_date,
+      videoKey: movie.teaserTrailerKey,
+      credits: movie.credits
+    }))
 }
 
 export {
