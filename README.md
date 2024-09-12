@@ -1,6 +1,6 @@
-![Movie Mania](./src/assets/img/screenshot.png)
+![Movie Mania](./assets/screenshot.png)
 
-[Launch App]()
+[Launch App](https://main--moviemaniacproject.netlify.app/)
 
 # Movie Mania
 Introducing Movie Mania: your ultimate movie concept creator and recommendation engine! With Movie Mania, unleash your imagination to craft unique movie ideas and add your favorite actors, directors, and genres to your movie concept. Whether you’re a budding filmmaker or a passionate cinephile, Movie Mania provides you with cinematic recommendations, making the discovery of your next favorite movie easier and more exciting than ever. Get ready to ignite your movie experience with Movie Mania!
