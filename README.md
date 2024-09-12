@@ -9,7 +9,7 @@ Introducing Movie Mania: your ultimate movie concept creator and recommendation 
 
 [Trello Planning Board](https://trello.com/b/yanCAaJd/movie-mania)
 
-[Movie Mania Back-End](https://github.com/tgunnr/movie-mania-front-end)
+[Movie Mania Front-End](https://github.com/tgunnr/movie-mania-front-end)
 
 ## How to Use
 1. Create a new account
